@@ -1,0 +1,59 @@
+version: "3.5"
+
+services:
+  frontend:
+    image: configmanage-frontend:latest
+    ports:
+      - "8088:80"
+    depends_on:
+      - backend
+    networks:
+      local_apps:
+        ipv4_address: "192.168.5.2"
+
+  backend:
+    image: configmanage-backend:latest
+    environment:
+      - INIT_DATABASE=true  # 初始化DB表和用户
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      local_apps:
+        ipv4_address: "192.168.5.3"
+
+  mysql:
+    image: mysql:5.7
+    expose:
+      - "3306"
+    restart: always
+    environment: 
+      - MYSQL_ROOT_PASSWORD=ConfigManagePwd
+      - MYSQL_DATABASE=configmanage
+    command: 
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    # volumes: 
+    #   - "./mysql-data:/var/lib/mysql" # 如果需要持久化数据，可以将注释去除
+    networks: 
+      local_apps:
+        ipv4_address: "192.168.5.4"
+
+  redis:
+    image: redis:latest
+    restart: always
+    volumes:
+      - "./redis.conf:/usr/local/etc/redis/redis.conf:ro"
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    expose:
+      - "6379"
+    networks:
+      local_apps:
+        ipv4_address: "192.168.5.5"
+
+networks:
+  local_apps:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.5.0/24"

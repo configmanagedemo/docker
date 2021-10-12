@@ -1,0 +1,23 @@
+title = "Go Framework"
+
+[database]
+type="mysql"
+host="192.168.5.4"
+port=3306
+username="root"
+password="ConfigManagePwd"
+name="configmanage"
+
+[server]
+appKey="OzMeDSvb6yzeCKHeayB64rpiWQGMNei2JwWXk6l5QlX3SUEJKQIA0qK2qHcqsraz"
+ip="0.0.0.0"
+port=80
+mode="init"
+webhook="http://127.0.0.1/webhook/test"
+lruSize=50 # lru缓存量
+
+[redis]
+db=0
+network="tcp"
+address="192.168.5.5:6379"
+password="configmanage123"
