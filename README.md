@@ -10,7 +10,7 @@
 1. 拉取`https://github.com/configmanagedemo/frontend.git`和`https://github.com/configmanagedemo/backend.git`到`docker`同级目录  
    或使用`clone_repos.sh`脚本自动拉取。
 2. 使用`build.sh`脚本编译、打包前后端源码，并构建镜像。
-3. 使用命令`docker-compose.yml`拉起服务。
+3. 使用命令`docker-compose up -d`拉起服务。
 4. 访问`http://localhost:8088`进入配置管理系统。
 
 ## 自定义
